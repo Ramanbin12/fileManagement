@@ -1,0 +1,5 @@
+const {createFolderController,getFolderController,deleteFolderController}=require('../controllers/folderController')
+const app=require("../index")
+app.post("/createFolder",createFolderController)
+app.get("/getFolders",getFolderController)
+app.delete("/deletefolder",deleteFolderController)
