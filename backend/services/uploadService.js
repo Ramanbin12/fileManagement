@@ -1,14 +1,20 @@
 const {uploadFile,deleteFile}=require("../dblayer/uploadfilequery")
 const  responseHandler=require("../cors/ResponseHandler")
 const to=require("await-to-js").to
+const {logStoragePath}=require("../multer")
 const {statusCode,messages}=require("../cors/constant")
 const uploadFileService=async(req,res)=>{
     const folder_id=req.query?.id??""
+    console.log("file",req.file)
     const size=req.file.size;
     file_size=(size/(1024*1024)).toFixed(2)
     console.log("filesize",file_size)
     const file_name=req.file.filename
-    const[error,data]=await to (uploadFile({file_name,file_size,folder_id}))
+    req.file.path=`http://localhost:3001/uploadFile/${file_name}`
+    console.log("fileee",req.file)
+    const path=req.file.path
+    // console.log("logStoragePath",logStoragePath)
+    const[error,data]=await to (uploadFile({file_name,file_size,folder_id,path}))
     if(error){
         return await responseHandler({
             statusCode:statusCode.BAD_STATUS,

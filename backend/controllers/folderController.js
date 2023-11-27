@@ -1,4 +1,4 @@
-const {insertFolderService,getFolderService,deleteFolderService}=require("../services/folderService")
+const {insertFolderService,getFolderService,deleteFolderService,getParentFolderService}=require("../services/folderService")
 const createFolderController=(req,res)=>{
     insertFolderService(req,res)
 }
@@ -8,4 +8,7 @@ const getFolderController=(req,res)=>{
 const deleteFolderController=(req,res)=>{
 deleteFolderService(req,res)
 }
-module.exports={createFolderController,getFolderController,deleteFolderController}
+const getParentFolderController=(req,res)=>{
+    getParentFolderService(req,res)
+}
+module.exports={createFolderController,getFolderController,deleteFolderController,getParentFolderController}

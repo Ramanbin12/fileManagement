@@ -35,5 +35,17 @@ const upload = multer({
 
 }).single('random');
 
+// const logStoragePath = (req, res, next) => {
+//   upload(req, res, (err) => {
+//     if (err instanceof multer.MulterError) {
+//       console.error('Multer error:', err);
+//     } else if (err) {
+//       console.error('Unknown error:', err);
+//     } else {
+//       console.log('Storage file path:', path.resolve('./uploads', req.file.filename));
+//     }
+//     next();
+//   });
+// };
 
 module.exports=upload

@@ -3,6 +3,7 @@ import  {addfolder} from "../../assests"
 import CloseIcon from '@mui/icons-material/Close';
 import { useAppDispatch, useAppSelector } from "../../hooks";
 import { createFolder } from "../../actions/folderActions";
+import { fetchFoldersSuccess } from "../../redux/slices/folderSlice";
 import axios from "axios"
 const ComponentCreateButton=()=>{
   const [showPopup, setShowPopup] = useState(false);
@@ -11,6 +12,23 @@ const ComponentCreateButton=()=>{
   const dispatch = useAppDispatch();
   const folders = useAppSelector((state) => state.folders.list);
   const currentFolderId = useAppSelector((state) => state.folders.currentFolderId);
+
+  const fetchFolders = async () => {
+    try {
+
+      if (currentFolderId !== undefined) {
+         const response=await axios.get('http://localhost:3001/getFolders', {
+            params: { id: currentFolderId}
+          });
+          console.log("response.data",response.data)
+          await dispatch(fetchFoldersSuccess(response.data));
+        } else {
+          console.error('Invalid id value. Please provide a valid id.');
+        }
+    } catch (error) {
+      console.error('Error fetching folders:', error);
+    }
+  };
   const handleCreateFolder = async() => {
     if (!folderName.trim()) {
       alert("Please enter valid folder name");
@@ -19,8 +37,8 @@ const ComponentCreateButton=()=>{
     setShowPopup(false);
     setFolderName("");
     await dispatch(createFolder(folderName, currentFolderId));
+    await fetchFolders()
     alert(`${folderName}`)
-    // <ComponentFolder foldername={folderName}/>
     console.log("folderss",folders)
     
     }

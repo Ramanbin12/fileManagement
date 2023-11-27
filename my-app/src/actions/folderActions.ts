@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { createFolderSuccess} from '../redux/slices/folderSlice';
+import { createFolderSuccess,fetchFoldersSuccess} from '../redux/slices/folderSlice';
 import { AppDispatch } from '../utils/type';
 export const createFolder = (folderName:string, currentFolderId:number|null) => async (dispatch:AppDispatch) => {
   try {
@@ -14,3 +14,4 @@ export const createFolder = (folderName:string, currentFolderId:number|null) => 
     console.error('Error creating folder:', error);
   }
 };
+

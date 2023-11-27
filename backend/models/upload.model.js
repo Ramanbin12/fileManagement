@@ -15,11 +15,16 @@ const file=sequelize.define("File",{
 file_size:{
     type:DataTypes.FLOAT,
     allowNull:false
-}
-    
+},
+path:{
+    type:DataTypes.STRING,
+    allowNull:false
+} 
 })
 file.belongsTo(Folder,{
     foreignKey:"folder_id",
     onDelete:"CASCADE"
 })
+// Folder.hasMany(file,{foreignKey:'folder_id'})
+
 module.exports=file

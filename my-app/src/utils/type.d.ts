@@ -16,3 +16,12 @@ export interface folderprops{
         createdAt: string;
         updatedAt: string;
 }
+export interface folder1props{
+    data:{
+    Folder_id: number;
+    Folder_Name: string;
+    parent_id: number | null;
+    createdAt: string;
+    updatedAt: string;
+    }
+}
