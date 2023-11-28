@@ -3,9 +3,11 @@ import  {addfolder} from "../../assests"
 import CloseIcon from '@mui/icons-material/Close';
 import { useAppDispatch, useAppSelector } from "../../hooks";
 import { createFolder } from "../../actions/folderActions";
+import CreateNewFolderIcon from '@mui/icons-material/CreateNewFolder';
 import { fetchFoldersSuccess } from "../../redux/slices/folderSlice";
 import axios from "axios"
 import { toast } from "react-toastify";
+import { Button } from "@mui/material";
 const ComponentCreateButton=()=>{
   const [showPopup, setShowPopup] = useState(false);
   const [folderName, setFolderName] = useState("");
@@ -53,10 +55,14 @@ const ComponentCreateButton=()=>{
   }
   return(
     <>
-    <div className="inline-flex items-center  md:p-3 md:gap-2 bg-gray-200 rounded-lg cursor-pointer" onClick={handlecrossbutton}>
-        <img className=" h-8" src={addfolder} alt=""/>
-        <div className="">Create folder</div>
+    <div className="inline-flex items-center  md:p-3 md:gap-2 rounded-lg cursor-pointer" onClick={handlecrossbutton}>
+        
+        <Button variant="contained" style={{ backgroundColor: 'white', color: 'blue' }}
+ endIcon={<CreateNewFolderIcon/>}>
+  Create Folder
+</Button>
     </div>
+   
     {/* {folders.map((folder) => (
         <ComponentFolder key={folder.id} foldername={folder.name} />
       ))} */}
