@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate, useLocation, useParams } from "react-router-dom";
+import ArrowBackIcon from '@mui/icons-material/ArrowBack';     
+
 import { setCurrentFolderId, popFromFolderIdStack, fetchFoldersSuccess } from "../../redux/slices/folderSlice";
 import { useAppDispatch, useAppSelector } from "../../hooks";
 import axios from "axios";
@@ -41,9 +43,12 @@ const ComponentBackButton = () => {
         }
     };
     return (
-        <button className=" p-2 sm:p-4  rounded  cursor-pointer" onClick={handleBackClick}>
-            Back
-        </button>
+        // <button className=" p-2 sm:p-4  rounded  cursor-pointer" onClick={handleBackClick}>
+        //     Back
+        // </button>
+        <div className=" p-2 sm:p-4  rounded  cursor-pointer" onClick={handleBackClick}>
+<ArrowBackIcon/>
+        </div>
     );
 };
 

@@ -63,9 +63,7 @@ const ComponentCreateButton=()=>{
 </Button>
     </div>
    
-    {/* {folders.map((folder) => (
-        <ComponentFolder key={folder.id} foldername={folder.name} />
-      ))} */}
+ 
     {showPopup && (
       <div className="fixed top-0 left-0 w-full h-full flex items-center justify-center">
         <div className=" bg-gray-100 w-1/2 sm:w-1/3 space-y-4 bg-white p-4 rounded shadow">
