@@ -7,4 +7,8 @@ const uploadFile=async({file_name,file_size,folder_id,path})=>{
 const deleteFile=async(id)=>{
     return await file.destroy({where:{file_id:id}})
 }
-module.exports={uploadFile,deleteFile}
+
+const getFile=async(id)=>{
+    return await file.findAll({where:{folder_id:id}})
+}
+module.exports={uploadFile,deleteFile,getFile}

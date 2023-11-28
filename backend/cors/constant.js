@@ -13,6 +13,6 @@ const messages={
     INCORRECT_FORMAT:"Input data is not in the correct format." ,
     UPLOAD_MESSAGE:" uploaded successfully",
     FILE_NOT_ALLOWED:"File type is not allowed",
-    FILE_SIZE_EXCEEDS:"Fle size should not be graeter than 10Mb"
+    FILE_SIZE_EXCEEDS:"Fle size should not be greater than 10Mb"
 }
 module.exports={statusCode,messages}

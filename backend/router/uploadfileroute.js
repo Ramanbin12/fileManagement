@@ -1,4 +1,4 @@
-const {uploadFileController,deleteFileController}=require('../controllers/uploadController')
+const {uploadFileController,deleteFileController, getFileController}=require('../controllers/uploadController')
 const app=require("../index")
 const uploadvalidate=require('../multer')
 const uploadMiddleware=require("../multer")
@@ -6,3 +6,4 @@ const uploadMiddleware=require("../multer")
 app.post("/uploadFile",uploadMiddleware,uploadFileController)
 
 app.delete("/deletefile",deleteFileController)
+app.get("/getFile",getFileController)

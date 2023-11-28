@@ -25,3 +25,21 @@ export interface folder1props{
     updatedAt: string;
     }
 }
+
+
+export interface filesprops{
+    file_id: number;
+    file_name: string;
+    file_size: float;
+    folder_id:number,
+    path:string,
+    createdAt: string;
+    updatedAt: string;
+}
+
+export interface YourResponseType {
+    error: boolean;
+    statusCode: number;
+    message: string;
+    data: any[]; 
+  }

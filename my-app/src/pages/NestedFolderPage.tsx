@@ -1,4 +1,4 @@
-import { addfile, addfolder, upload } from "../assests"
+import { addfile, addfolder, upload,rectangle } from "../assests"
 import ComponentBackButton from "../components/ComponentBackButton/ComponentBackButton"
 import ComponentCreateButton from "../components/ComponentCreateButton/ComponentCreateButton"
 import ComponentFolder from "../components/ComponentFolder/ComponentFolder"
@@ -7,7 +7,7 @@ import ComponentUploadButton from "../components/ComponentUploadButton/Component
 const NestedFolderPage=()=>{
 
     return(
-    <div className=" h-screen ">
+    <div className=" h-screen bg-cover bg-center p-10 space-y-4 "style={{ backgroundImage: `url(${rectangle})` }}>
 
 <ComponentHeader/>
 <div className="flex justify-between">

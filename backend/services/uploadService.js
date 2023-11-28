@@ -1,4 +1,4 @@
-const {uploadFile,deleteFile}=require("../dblayer/uploadfilequery")
+const {uploadFile,deleteFile, getFile}=require("../dblayer/uploadfilequery")
 const  responseHandler=require("../cors/ResponseHandler")
 const to=require("await-to-js").to
 const {logStoragePath}=require("../multer")
@@ -41,5 +41,21 @@ const deleteFileService=async(req,res)=>{
     return await responseHandler({statusCode:statusCode.OK_STATUS,message:messages.DELETE_MESSAGE,res,data})
 
 }
+const getFileService=async(req,res)=>{
+    const id=req.query.id
 
-module.exports={uploadFileService,deleteFileService}
+    const[error,data]=await to (getFile(id))
+    if(error){
+        return await responseHandler({
+            statusCode:statusCode.BAD_STATUS,
+            error:true,
+            res,
+            message:error.message
+        })
+    }
+    return await responseHandler({statusCode:statusCode.CREATED_STATUS,message:messages.SELECT_MESSAGE,res,data})
+}
+
+
+
+module.exports={uploadFileService,deleteFileService,getFileService}

@@ -5,6 +5,7 @@ import { useAppDispatch, useAppSelector } from "../../hooks";
 import { createFolder } from "../../actions/folderActions";
 import { fetchFoldersSuccess } from "../../redux/slices/folderSlice";
 import axios from "axios"
+import { toast } from "react-toastify";
 const ComponentCreateButton=()=>{
   const [showPopup, setShowPopup] = useState(false);
   const [folderName, setFolderName] = useState("");
@@ -31,14 +32,16 @@ const ComponentCreateButton=()=>{
   };
   const handleCreateFolder = async() => {
     if (!folderName.trim()) {
-      alert("Please enter valid folder name");
+      // alert("Please enter valid folder name");
+      toast.error("Please enter valid folder name")
     } else {
     console.log("Folder created:", folderName);
     setShowPopup(false);
     setFolderName("");
     await dispatch(createFolder(folderName, currentFolderId));
     await fetchFolders()
-    alert(`${folderName}`)
+    // alert(`${folderName}`)
+    toast.success("folder created successfully")
     console.log("folderss",folders)
     
     }
@@ -50,8 +53,8 @@ const ComponentCreateButton=()=>{
   }
   return(
     <>
-    <div className="inline-flex items-center  p-3 gap-2 bg-gray-200 rounded-lg cursor-pointer" onClick={handlecrossbutton}>
-        <img className="h-8" src={addfolder} alt=""/>
+    <div className="inline-flex items-center  md:p-3 md:gap-2 bg-gray-200 rounded-lg cursor-pointer" onClick={handlecrossbutton}>
+        <img className=" h-8" src={addfolder} alt=""/>
         <div className="">Create folder</div>
     </div>
     {/* {folders.map((folder) => (
