@@ -12,7 +12,7 @@ const NestedFolderPage=()=>{
 <ComponentHeader/>
 <div className="flex justify-between">
 <ComponentBackButton/>
-<div className="flex justify-end gap-4 p-4">
+<div className="flex-wrap sm:flex justify-end gap-4 p-4">
     <ComponentUploadButton/>
     <ComponentCreateButton />
 </div>

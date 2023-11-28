@@ -16,11 +16,8 @@ const folderSlice = createSlice({
     },
     setCurrentFolderId: (state, action) => {
       state.currentFolderId = action.payload;
-      console.log("actionpayload",action.payload)
-      console.log("state",current(state))
     },
     fetchFoldersSuccess: (state, action) => {
-        console.log("slice")
         state.folders = action.payload;
 
       },

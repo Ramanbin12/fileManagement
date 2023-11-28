@@ -14,12 +14,9 @@ const ComponentFolder = () => {
     const files=useAppSelector((state)=>state.folders.files)
     const id = useAppSelector((state) => state.folders.currentFolderId)
     const folderstack = useAppSelector((state) => state.folders.folderIdStack)
-    console.log("currentfolderId", id)
-   console.log("changedddd")
 
     const handleFolderClick = async (folderId: number) => {
            dispatch(pushToFolderIdStack(folderId)); 
-        console.log("folderStack",folderstack)
         dispatch(setCurrentFolderId(folderId));
         fetchFolders()
     };
@@ -35,13 +32,10 @@ const ComponentFolder = () => {
 
     const fetchFolders = async () => {
         try {
-            console.log("inside fetch", id2)
             if (id !== undefined) {
                 const response = await axios.get('http://localhost:3001/getFolders', {
                     params: { id: id2 }
                 });
-                console.log("response.data", response.data)
-                console.log("helllllllloooooo")
                 await dispatch(fetchFoldersSuccess(response.data));
             } else {
                 console.error('Invalid id value. Please provide a valid id.');
@@ -53,13 +47,10 @@ const ComponentFolder = () => {
 
     const fetchFile = async () => {
         try {
-            console.log("inside fetch", id2)
             if (id !== undefined) {
                 const response = await axios.get('http://localhost:3001/getFile', {
                     params: { id: id2 }
                 });
-                console.log("response.data", response.data)
-                console.log("helllllllloooooo")
                 await dispatch(fetchFileSuccess(response.data));
             } else {
                 console.error('Invalid id value. Please provide a valid id.');
@@ -70,12 +61,11 @@ const ComponentFolder = () => {
     };
 
     const folder1 = folders.data
-    console.log("folder1", folder1)
     const files1=files.data
-    console.log("files1",files1)
     return (
-        <div className='flex-wrap md:flex justify-evenly'>
-            {folder1 && folder1.length > 0 ? (
+        <div className='flex justify-evenly'>
+            
+            {folder1 && folder1.length > 0 &&
                 folder1.map((item: folderprops) => {
                     return (
                         <Link key={item.Folder_id} to={`/${item.Folder_id}`} className="flex flex-col w-1/4 md:w-1/12  items-center p-2  rounded-md cursor-pointer " onClick={() => handleFolderClick(item.Folder_id)} >
@@ -87,7 +77,7 @@ const ComponentFolder = () => {
                         </Link>
                     )
                 })
-            ) : <div>no folder available</div>
+           
             }
 
 
