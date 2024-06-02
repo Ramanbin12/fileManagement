@@ -1,5 +1,5 @@
 import { upload } from "../../assests"
-import React, { useState } from "react"
+import React, { useState ,useEffect} from "react"
 import axios from 'axios'
 import { setCurrentFolderId, fetchFileSuccess, } from "../../redux/slices/folderSlice";
 import { useAppSelector, useAppDispatch } from "../../hooks";
@@ -13,72 +13,74 @@ const ComponentUploadButton = () => {
     const fileInputRef = React.createRef<HTMLInputElement>();
     const id = useAppSelector((state) => state.folders.currentFolderId)
     const dispatch = useAppDispatch()
-    const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const handleFileChange = async(event: React.ChangeEvent<HTMLInputElement>) => {
         const files = event.target.files;
         if (files && files.length > 0) {
             setSelectedFile(files[0]);
+            await handleFileUpload(files[0]);
         }
     };
-
+useEffect(()=>{
+fetchFile(id)
+},[id])
+const fetchFile = async (id:number) => {
+    try {
+        if (id !== undefined) {
+            const response = await axios.get('http://localhost:3001/getFile', {
+                params: { id: id }
+            });
+            await dispatch(fetchFileSuccess(response.data));
+        } else {
+            console.error('Invalid id value. Please provide a valid id.');
+        }
+    } catch (error) {
+        console.error('Error fetching folders:', error);
+    }
+};
     const handleButtonClick = () => {
         if (fileInputRef.current) {
             fileInputRef.current.click();
         }
     };
-    console.log("cccccccccccccc", id)
     const id2 = useAppSelector((state) => state.folders.currentFolderId)
 
-    const fetchFile = async () => {
+    const handleFileUpload = async (file:File) => {
         try {
-            console.log("inside fetch", id2)
-            if (id !== undefined) {
-                const response = await axios.get('http://localhost:3001/getFile', {
-                    params: { id: id2 }
-                });
-                console.log("response.data", response.data)
-                console.log("helllllllloooooo")
-                await dispatch(fetchFileSuccess(response.data));
-            } else {
-                console.error('Invalid id value. Please provide a valid id.');
-            }
-        } catch (error) {
-            console.error('Error fetching folders:', error);
-        }
-    };
-    const handleFileUpload = async () => {
-        try {
-            if (!selectedFile) {
-                console.error("No file selected");
+            const fileSizeInMB = file.size / (1024 * 1024);
+            if (fileSizeInMB > 10) {
+                toast.error("File size should be less than 10 MB");
                 return;
             }
-
-            // Create a FormData object
+            const forbiddenExtensions=['.wav', '.exe', '.api', '.ios', '.js']
+            const fileExt=file.name.slice(file.name.lastIndexOf("."))
+            if(forbiddenExtensions.includes(`${fileExt}`)){
+                toast.error("File type is not allowed");
+                return;
+            }
+            console.log("fileExtension",fileExt)
             const formData = new FormData();
-
-            // Append the selected file to the FormData object
-            formData.append("random", selectedFile);
+           
+            formData.append("random", file);
 
             try {
                 const response = await axios.post<YourResponseType>('http://localhost:3001/uploadFile', formData, {
                     params: { id: id },
                     headers: {
-                        'Content-Type': 'multipart/form-data', // Set the content type for FormData
+                        'Content-Type': 'multipart/form-data', 
                     },
                 });
-                // toast.error('Test error message');
+                
 
+                fetchFile(id)
+                toast.success("File uploaded successfully")
                 const data = response.data;
-                // toast.error(data.error);
-                // alert(data.error)
+                
                 if (data.error) {
-                    // alert(data.message)
-                    console.log("dddddddddddddddddeeeeeeeeeeeeeeeeeee", data.error)
                     toast.error(data.message)
                 }
 
                 console.log("response", response.data)
 
-                // await dispatch(createFolderSuccess(response.data));
             } catch (error) {
                 console.error('Error creating folder:', error);
             }
@@ -103,9 +105,7 @@ const ComponentUploadButton = () => {
                 style={{ display: 'none' }}
                 onChange={handleFileChange}
             />
-            {selectedFile && (
-                <button onClick={handleFileUpload}>Upload Selected File</button>
-            )}
+      
         </>
     )
 }

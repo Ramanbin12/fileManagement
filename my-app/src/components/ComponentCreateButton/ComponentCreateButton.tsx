@@ -1,8 +1,7 @@
 import React,{useState} from "react"
-import  {addfolder} from "../../assests"
 import CloseIcon from '@mui/icons-material/Close';
 import { useAppDispatch, useAppSelector } from "../../hooks";
-import { createFolder } from "../../actions/folderActions";
+import { createFolder,fetchFolders } from "../../actions/folderActions";
 import CreateNewFolderIcon from '@mui/icons-material/CreateNewFolder';
 import { fetchFoldersSuccess } from "../../redux/slices/folderSlice";
 import axios from "axios"
@@ -16,35 +15,15 @@ const ComponentCreateButton=()=>{
   const folders = useAppSelector((state) => state.folders.list);
   const currentFolderId = useAppSelector((state) => state.folders.currentFolderId);
 
-  const fetchFolders = async () => {
-    try {
-
-      if (currentFolderId !== undefined) {
-         const response=await axios.get('http://localhost:3001/getFolders', {
-            params: { id: currentFolderId}
-          });
-          console.log("response.data",response.data)
-          await dispatch(fetchFoldersSuccess(response.data));
-        } else {
-          console.error('Invalid id value. Please provide a valid id.');
-        }
-    } catch (error) {
-      console.error('Error fetching folders:', error);
-    }
-  };
   const handleCreateFolder = async() => {
     if (!folderName.trim()) {
-      // alert("Please enter valid folder name");
       toast.error("Please enter valid folder name")
     } else {
-    console.log("Folder created:", folderName);
     setShowPopup(false);
     setFolderName("");
     await dispatch(createFolder(folderName, currentFolderId));
-    await fetchFolders()
-    // alert(`${folderName}`)
+    await dispatch(fetchFolders(currentFolderId))
     toast.success("folder created successfully")
-    console.log("folderss",folders)
     
     }
   }
